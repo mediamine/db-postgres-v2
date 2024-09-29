@@ -1,0 +1,17 @@
+name: mediamine-web
+services:
+  mediamine-web-db-2:
+    image: postgres
+    container_name: mediamine-web-db-2
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_DB: mediamine
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+    restart: always
+ 
+volumes:
+  pgdata:
