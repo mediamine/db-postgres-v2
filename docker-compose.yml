@@ -1,10 +1,22 @@
 name: mediamine-web
 services:
-  mediamine-web-db-2:
+  mediamine-web-db-legacy:
+      image: postgres
+      container_name: mediamine-web-db-legacy
+      ports:
+        - 5432:5432
+      environment:
+        POSTGRES_DB: mediamine
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+      volumes:
+        - pgdata-legacy:/var/lib/postgresql/data 
+      restart: always
+  mediamine-web-db:
     image: postgres
-    container_name: mediamine-web-db-2
+    container_name: mediamine-web-db
     ports:
-      - 5435:5432
+      - 5434:5432
     environment:
       POSTGRES_DB: mediamine
       POSTGRES_USER: postgres
@@ -14,4 +26,5 @@ services:
     restart: always
  
 volumes:
+  pgdata-legacy:
   pgdata:
