@@ -131,3 +131,6 @@ dist
 
 # pg_dump
 .dump
+
+# prisma
+.prisma

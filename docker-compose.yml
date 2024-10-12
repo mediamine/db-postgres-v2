@@ -1,19 +1,23 @@
 name: mediamine-web
 services:
   mediamine-web-db-legacy:
-      image: postgres
-      container_name: mediamine-web-db-legacy
-      ports:
-        - 5432:5432
-      environment:
-        POSTGRES_DB: mediamine
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-      volumes:
-        - pgdata-legacy:/var/lib/postgresql/data 
-      restart: always
+    image: postgres:16.4
+    container_name: mediamine-web-db-legacy
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: mediamine
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata-legacy:/var/lib/postgresql/data
+      - ./setup/db-legacy:/docker-entrypoint-initdb.d/
+    networks:
+      - mediamine-network
+    restart: always
+
   mediamine-web-db:
-    image: postgres
+    image: postgres:16.4
     container_name: mediamine-web-db
     ports:
       - 5434:5432
@@ -22,9 +26,16 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data 
+      - pgdata:/var/lib/postgresql/data
+      - ./setup/db:/docker-entrypoint-initdb.d/
+    networks:
+      - mediamine-network
     restart: always
- 
+
 volumes:
   pgdata-legacy:
   pgdata:
+
+networks:
+  mediamine-network:
+    driver: bridge
