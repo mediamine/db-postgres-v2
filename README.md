@@ -1,3 +1,5 @@
+DEPRECATED
+
 # db-postgres-v2
 
 ## taking a postgresql db dump
